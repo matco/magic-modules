@@ -86,6 +86,8 @@ module Provider
       generate_datasources(output_folder, types, version_name) \
         unless @config.datasources.nil?
 
+      generate_async(output_folder, types, version_name)
+
       # Write a file with the final version of the api, after overrides
       # have been applied.
       return unless dump_yaml
@@ -97,6 +99,9 @@ module Provider
         file.write("# This is a generated file, its contents will be overwritten.\n")
         file.write(YAML.dump(@api))
       end
+    end
+
+    def generate_async(output_folder, types, version_name)
     end
 
     def copy_files(output_folder)

@@ -161,5 +161,18 @@ module Provider
         out_file: filepath
       )
     end
+
+    # Only going to be run once.
+    def generate_async(output_folder, types, version_name)
+      return if @api.objects.select { |o| o.autogen_async }.empty?
+      prod_name = @api.name
+      async = @api.objects.map { |o| o.async }.compact.first
+      data = {
+        async: async,
+        default_template: 'templates/terraform/operation.erb',
+        out_file: File.join(output_folder, "google/#{prod_name}_operation.go")
+      }
+      generate_resource_file data
+    end
   end
 end
