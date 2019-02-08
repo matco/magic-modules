@@ -22,7 +22,7 @@ func (w *<%= product_name -%>OperationWaiter) QueryOp() (interface{}, error) {
   return sendRequestWithTimeout(w.Config, "GET", w.op.name, {}, 4)
 }
 
-func <%= product_name -%>WaitTime(config, op *Operation, project, activity, timeoutMinutes int) error {
+func <%= product_name -%>OperationWaitTime(config, op *Operation, project, activity, timeoutMinutes int) error {
   w := &<%= product_name -%>OperationWaiter{
     Config: config
   }

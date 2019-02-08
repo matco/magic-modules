@@ -166,7 +166,7 @@ module Provider
     def generate_async(output_folder, _types, version_name)
       return if @api.objects.select(&:autogen_async).empty?
 
-      prod_name = @api.name
+      prod_name = @api.name.underscore
       async = @api.objects.map(&:async).compact.first
       data = build_object_data(@api.objects.first, output_folder, version_name)
       generate_resource_file(data.clone.merge(
