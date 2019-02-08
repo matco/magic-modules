@@ -163,17 +163,19 @@ module Provider
     end
 
     # Only going to be run once.
-    def generate_async(output_folder, types, version_name)
-      return if @api.objects.select { |o| o.autogen_async }.empty?
+    def generate_async(output_folder, _types, version_name)
+      return if @api.objects.select(&:autogen_async).empty?
+
       prod_name = @api.name
-      async = @api.objects.map { |o| o.async }.compact.first
+      async = @api.objects.map(&:async).compact.first
       data = build_object_data(@api.objects.first, output_folder, version_name)
-      generate_resource_file(data.clone.merge({
-        async: async,
-        object: @api.objects.first,
-        default_template: 'templates/terraform/operation.erb',
-        out_file: File.join(output_folder, "google/#{prod_name}_operation.go")
-      }))
+      generate_resource_file(data.clone.merge(
+                               async: async,
+                               object: @api.objects.first,
+                               default_template: 'templates/terraform/operation.erb',
+                               out_file: File.join(output_folder,
+                                                   "google/#{prod_name}_operation.go")
+                             ))
     end
   end
 end

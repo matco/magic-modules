@@ -101,8 +101,7 @@ module Provider
       end
     end
 
-    def generate_async(output_folder, types, version_name)
-    end
+    def generate_async(output_folder, types, version_name); end
 
     def copy_files(output_folder)
       copy_file_list(output_folder, @config.files.copy)
