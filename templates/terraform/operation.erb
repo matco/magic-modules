@@ -9,7 +9,7 @@ import (
 )
 
 type <%= product_name -%>OperationWaiter struct {
-  CommonOperationWaiter
+  CommonOperationWaiter,
   Config *Config
 }
 
@@ -19,12 +19,12 @@ func (w *<%= product_name -%>OperationWaiter) QueryOp() (interface{}, error) {
   }
   // Returns the proper get.
 
-  return sendRequestWithTimeout(w.Config, "GET", w.op.name, {}, 4)
+  return sendRequestWithTimeout(w.Config, "GET", w.op.name, nil, 4)
 }
 
 func <%= product_name.underscore -%>OperationWaitTime(config, op *Operation, project, activity, timeoutMinutes int) error {
   w := &<%= product_name -%>OperationWaiter{
-    Config: config
+    Config: config,
   }
   if err := w.SetOp(op); err != nil {
     return err
