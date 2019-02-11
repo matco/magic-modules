@@ -168,13 +168,17 @@ module Provider
 
       prod_name = @api.name.underscore
       async = @api.objects.map(&:async).compact.first
+
       data = build_object_data(@api.objects.first, output_folder, version_name)
+      dir = data[:version] == 'beta' ? 'google-beta' : 'google'
+      target_folder = File.join(data[:output_folder], dir)
+
       generate_resource_file(data.clone.merge(
                                async: async,
                                object: @api.objects.first,
                                default_template: 'templates/terraform/operation.erb',
-                               out_file: File.join(output_folder,
-                                                   "google/#{prod_name}_operation.go")
+                               out_file: File.join(target_folder,
+                                                   "#{prod_name}_operation.go")
                              ))
     end
   end
